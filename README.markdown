@@ -24,10 +24,10 @@
         {
           public function setup()
           {
-            $this-&gt;enablePlugins(array(
-              &#039;sfDoctrinePlugin&#039;, 
-              &#039;sfDoctrineGuardPlugin&#039;,
-              &#039;...&#039;
+            $this->enablePlugins(array(
+              'sfDoctrinePlugin', 
+              'sfDoctrineGuardPlugin',
+              '...'
             ));
           }
         }
@@ -75,7 +75,7 @@
 
         symfony cc
 
-  * オプションで、&quot;Remember Me&quot; フィルターを `filters.yml` のセキュリ
+  * オプションで、"Remember Me" フィルターを `filters.yml` のセキュリ
     ティフィルターの上に追加します:
 
         [yml]
@@ -194,15 +194,14 @@ sfGuardAuth のメソッドをカスタマイズ、または追加したい場�
     (`BasesfGuardAuthActions` は symfony でオートロードされないので、インクルー
     ドしてください)
 
-        &lt;?php
-    
-        require_once(sfConfig::get(&#039;sf_plugins_dir&#039;).&#039;/sfDoctrineGuardPlugin/modules/sfGuardAuth/lib/BasesfGuardAuthActions.class.php&#039;);
+        [php]
+        require_once(sfConfig::get('sf_plugins_dir').'/sfDoctrineGuardPlugin/modules/sfGuardAuth/lib/BasesfGuardAuthActions.class.php');
     
         class sfGuardAuthActions extends BasesfGuardAuthActions
         {
           public function executeNewAction()
           {
-            return $this-&gt;renderText(&#039;This is a new sfGuardAuth action.&#039;);
+            return $this->renderText('This is a new sfGuardAuth action.');
           }
         }
 
@@ -212,7 +211,7 @@ sfGuardAuth のメソッドをカスタマイズ、または追加したい場�
 ションで `user` オブジェクトとして使われます。(インストールの手順で `myUser` の
 基底クラスを変更しました)
 
-このオブジェクトにアクセスするには、アクションでは `$this-&gt;getUser()`、テンプ
+このオブジェクトにアクセスするには、アクションでは `$this->getUser()`、テンプ
 レートでは `$sf_user` を使います。
 
 `sfGuardSecurityUser` にはいくつかの追加のメソッドがあります:
@@ -223,10 +222,10 @@ sfGuardAuth のメソッドをカスタマイズ、または追加したい場�
 
 たとえば、現在のユーザー名を取得するには次のようにします:
 
-    $this-&gt;getUser()-&gt;getGuardUser()-&gt;getUsername()
+    $this->getUser()->getGuardUser()->getUsername()
 
     // プロキシメソッドを使うと
-    $this-&gt;getUser()-&gt;getUsername()
+    $this->getUser()->getUsername()
 
 ## スーパー管理者フラグ ##
 
@@ -256,15 +255,16 @@ LDAP サーバーや .htaccess ファイルを使っているためデータベ�
       sf_guard_plugin:
         check_password_callable: [MyLDAPClass, checkPassword]
 
-symfony が `$this-&gt;getUser()-&gt;checkPassword()` メソッドを呼び出す時に、設
+symfony が `$this->getUser()->checkPassword()` メソッドを呼び出す時に、設
 定したメソッドまたは関数を呼び出します。関数は 2 つの引数をとります。1 つ目はユ
 ーザー名で、2 つ目はパスワードです。関数からは true または false を返すようにし
 ます。関数のテンプレートは次のようになります:
 
+    [php]
     function checkLDAPPassword($username, $password)
     {
       $user = LDAP::getUser($username);
-      if ($user-&gt;checkPassword($password))
+      if ($user->checkPassword($password))
       {
         return true;
       }
@@ -292,9 +292,9 @@ symfony が `$this-&gt;getUser()-&gt;checkPassword()` メソッドを呼び出�
 アルゴリズムはユーザーごとに保存されるため、後からアルゴリズムを変更する場合に既
 存のユーザーのパスワードを再生成する必要はありません。
 
-## &quot;Remember Me&quot; Cookie の名前や有効期限を変更する ##
+## "Remember Me" Cookie の名前や有効期限を変更する ##
 
-デフォルトでは、&quot;Remember Me&quot; 機能により `sfRemember` という名前の
+デフォルトでは、"Remember Me" 機能により `sfRemember` という名前の
 Cookie が 15 日間保存されます。これは `app.yml` で変更できます:
 
     all:
